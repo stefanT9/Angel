@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="PhoneNumber">0757210711</string>
+    <string name="firstName"> test first name</string>
+    <string name="lastName"> test last name</string>
+    <string name="cnp">0000000000</string>
+</resources>
