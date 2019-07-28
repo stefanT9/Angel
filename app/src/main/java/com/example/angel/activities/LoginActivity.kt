@@ -12,6 +12,7 @@ class LoginActivity : AppCompatActivity() {
     private var auth = FirebaseAuth.getInstance()
     val db = FirebaseFirestore.getInstance()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
