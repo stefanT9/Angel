@@ -5,10 +5,13 @@ import android.content.Intent
 import android.net.Uri
 
 
-class emergencyServices()
-{
-    fun callEmergency()
-    {
-        val intent=Intent(this,)
+class EmergencyServices {
+
+    fun callEmergency() {
+
+    }
+
+    fun sendAlert() {
+
     }
 }
