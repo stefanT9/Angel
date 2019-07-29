@@ -17,19 +17,26 @@ import kotlinx.android.synthetic.main.activity_login.*
 class LoginActivity : AppCompatActivity() {
 
     var auth = FirebaseAuth.getInstance()
-    var email = email_editText_login.text.toString()
-    var password = password_editText_login.text.toString()
-    val emergencyService = EmergencyServices()
+    var emergencyService = EmergencyServices()
+    var db = FirebaseFirestore.getInstance()
+
+    lateinit var email: String
+    lateinit var password: String
 
     ///when loginClicks reach 5 the phone enters panic mode
-    var loginClicks = 0;
+    var loginClicks = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        val currentUser = auth.currentUser
-        updateUI(currentUser)
+
+        email = email_editText_login.text.toString()
+        password = password_editText_login.text.toString()
+
+        if (auth.currentUser != null) {
+            auth.signOut()
+        }
 
         login_button_login.setOnClickListener()
         {
@@ -39,11 +46,19 @@ class LoginActivity : AppCompatActivity() {
                 {
                     if (it.isSuccessful) {
                         Log.d("[Login]", "Login completed by user ${auth.uid}")
+                        intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                        finish()
                     } else {
                         Log.d("[Login]", "Login failed")
                     }
                 }
             }
+        }
+        register_button_login.setOnClickListener()
+        {
+            intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -63,15 +78,6 @@ class LoginActivity : AppCompatActivity() {
             return false
         }
         return true
-    }
-
-    fun updateUI(user:FirebaseUser?)
-    {
-        if (user != null) {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
     }
 
     fun updateCredentials() {

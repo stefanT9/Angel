@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package com.example.angel.models
 
 import com.google.firebase.firestore.DocumentSnapshot

@@ -8,21 +8,32 @@
         tools:context=".activities.LoginActivity"
         android:orientation="vertical">
     <androidx.appcompat.widget.AppCompatEditText
+            android:hint="email"
             android:id="@+id/email_editText_login"
             android:layout_width="match_parent"
             android:layout_height="100dp"
+            android:inputType="textEmailAddress"
     />
 
     <androidx.appcompat.widget.AppCompatEditText
+            android:hint="password"
             android:id="@+id/password_editText_login"
             android:layout_width="match_parent"
             android:layout_height="100dp"
+            android:inputType="textPassword"
     />
 
-    <androidx.appcompat.widget.AppCompatImageButton
+    <Button
             android:id="@+id/login_button_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="Login"
+    />
+    <Button
+            android:id="@+id/register_button_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Register"
     />
 
 </LinearLayout>
