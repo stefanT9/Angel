@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         {
 
         }
+
         becomeAngel_button_main.setOnClickListener()
         {
             intent = Intent(this, CameraActivity::class.java)

@@ -1,25 +1,22 @@
 package com.example.angel.activities
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Environment
-import android.os.SystemClock.sleep
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.camerakit.CameraKitView
 import com.example.angel.R
-import com.google.firebase.ml.vision.FirebaseVision
-import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcode
-import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetectorOptions
-import com.google.firebase.ml.vision.common.FirebaseVisionImage
+import com.example.angel.services.QrServices
 import kotlinx.android.synthetic.main.activity_camera.*
+import java.io.File
+import java.io.FileOutputStream
 
 
 class CameraActivity : AppCompatActivity() {
 
     lateinit var cameraKitView: CameraKitView
+    var qrServices= QrServices()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_camera)
@@ -27,10 +24,7 @@ class CameraActivity : AppCompatActivity() {
         scanQr_button_camera.setOnClickListener()
         {
             Log.d("[Camera]", "scan button pressed")
-            cameraKitView.captureImage { cameraKitView, photo ->
-                val bmp = BitmapFactory.decodeByteArray(photo, 0, photo.size)
-                getQRCodeDetails(bmp)
-            }
+
         }
     }
 
@@ -59,27 +53,6 @@ class CameraActivity : AppCompatActivity() {
         cameraKitView.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
-    private fun getQRCodeDetails(bitmap: Bitmap) {
 
-        val options = FirebaseVisionBarcodeDetectorOptions.Builder()
-            .setBarcodeFormats(
-                FirebaseVisionBarcode.FORMAT_QR_CODE
-            )
-            .build()
-        val detector = FirebaseVision.getInstance().getVisionBarcodeDetector(options)
-        val image = FirebaseVisionImage.fromBitmap(bitmap)
-
-        detector.detectInImage(image)
-            .addOnSuccessListener {
-                for (firebaseBarcode in it) {
-                    Toast.makeText(this, firebaseBarcode.rawValue, Toast.LENGTH_SHORT).show()
-                    sleep(1000)
-                }
-            }
-            .addOnFailureListener {
-                it.printStackTrace()
-                Toast.makeText(baseContext, "Sorry, something went wrong!", Toast.LENGTH_SHORT).show()
-            }
-    }
 
 }
