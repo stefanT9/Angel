@@ -23,7 +23,8 @@ class MainActivity : AppCompatActivity() {
 
         getAngel_button_main.setOnClickListener()
         {
-
+            val intent=Intent(this,QrActivity::class.java)
+            startActivity(intent)
         }
         becomeAngel_button_main.setOnClickListener()
         {
