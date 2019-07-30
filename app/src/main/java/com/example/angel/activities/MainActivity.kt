@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
             val intent=Intent(this,QrActivity::class.java)
             startActivity(intent)
         }
+
         becomeAngel_button_main.setOnClickListener()
         {
             intent = Intent(this, CameraActivity::class.java)

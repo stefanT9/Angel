@@ -6,7 +6,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.lang.Exception
 import kotlin.system.measureTimeMillis
 
-class UserServices() {
+class UserServices {
 
     private val context = FirebaseFirestore.getInstance()
     private val userDB = context.collection("users")
