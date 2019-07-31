@@ -13,6 +13,8 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:inputType="textEmailAddress"
+            android:layout_margin="12dp"
+
     />
 
     <androidx.appcompat.widget.AppCompatEditText
@@ -21,6 +23,8 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:inputType="textPassword"
+            android:layout_margin="12dp"
+
     />
 
     <Button
@@ -28,12 +32,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Login"
+            android:layout_margin="12dp"
+
     />
     <Button
             android:id="@+id/register_button_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Register"
+            android:layout_margin="12dp"
+
     />
 
 </LinearLayout>

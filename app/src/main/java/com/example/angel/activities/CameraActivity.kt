@@ -3,7 +3,6 @@ package com.example.angel.activities
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.camerakit.CameraKitView
 import com.example.angel.R
 import com.example.angel.services.CameraServices
 import com.example.angel.services.QrServices
@@ -16,7 +15,6 @@ import kotlinx.android.synthetic.main.activity_camera.*
 
 class CameraActivity : AppCompatActivity() {
 
-    lateinit var cameraKitView: CameraKitView
     lateinit var fotoAparat: Fotoapparat
     var qrServices = QrServices(this)
     var cameraServices = CameraServices(this)
@@ -63,7 +61,7 @@ class CameraActivity : AppCompatActivity() {
 
         scanQr_button_camera.setOnClickListener()
         {
-            val photoResult = fotoAparat.takePicture().toBitmap().whenAvailable {
+            fotoAparat.takePicture().toBitmap().whenAvailable {
                 if (it != null) {
                     Toast.makeText(this, "scanning", Toast.LENGTH_SHORT).show()
                     qrServices.getQRCodeDetails(it.bitmap)
