@@ -72,7 +72,7 @@ class UserServices(val context: Context) {
     }
 
 
-    private fun becomeAngel(angelId: String, userId: String) {
+    fun becomeAngel(angelId: String, userId: String) {
         userDB.document(userId).get().addOnSuccessListener {
             val user = User(it)
             user.angelsId.add(angelId)
@@ -83,6 +83,10 @@ class UserServices(val context: Context) {
             user.guardedId.add(userId)
             addToDb(user)
         }
+    }
+
+    fun isValidId(id: String): Boolean {
+        return true
     }
 
 }
