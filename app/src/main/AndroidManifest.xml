@@ -3,8 +3,9 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="com.example.angel">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <uses-feature android:name="android.hardware.camera.autofocus"/>
     <uses-feature
@@ -19,25 +20,32 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activities.QrActivity">
-        </activity>
-        <activity android:name=".activities.CameraActivity">
-        </activity>
-
         <meta-data
                 android:name="com.google.firebase.ml.vision.DEPENDENCIES"
                 android:value="barcode"/>
+        <activity
+                android:name=".activities.QrActivity">
+        </activity>
 
-        <activity android:name=".activities.RegisterActivity">
-        </activity>
-        <activity android:name=".activities.MainActivity">
-        </activity>
-        <activity android:name=".activities.LoginActivity">
+        <activity android:name=".activities.CameraActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+
+        <activity
+                android:name=".activities.RegisterActivity">
+        </activity>
+
+        <activity
+                android:name=".activities.MainActivity">
+        </activity>
+
+        <activity
+                android:name=".activities.LoginActivity">
+
         </activity>
     </application>
 

@@ -7,17 +7,12 @@
         android:layout_height="match_parent"
         tools:context=".activities.CameraActivity">
 
-    <com.camerakit.CameraKitView
+    <io.fotoapparat.view.CameraView
+
             android:id="@+id/camera_cameraView_camera"
             android:layout_width="match_parent"
-            android:layout_height="700dp"
-            app:layout_constraintTop_toTopOf="parent"
-            android:adjustViewBounds="true"
-            android:keepScreenOn="true"
-            app:camera_flash="auto"
-            app:camera_facing="back"
-            app:camera_focus="continuous"
-            app:camera_permissions="camera"/>
+            android:layout_height="600dp"
+            app:layout_constraintTop_toTopOf="parent"/>
     <Button
             android:id="@+id/scanQr_button_camera"
             android:layout_width="match_parent"

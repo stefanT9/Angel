@@ -1,15 +1,17 @@
 package com.example.angel.services
 
+import android.content.Context
 import android.util.Log
 import com.example.angel.models.User
 import com.google.firebase.firestore.FirebaseFirestore
 import java.lang.Exception
 import kotlin.system.measureTimeMillis
 
-class UserServices {
+class UserServices(val context: Context) {
 
-    private val context = FirebaseFirestore.getInstance()
-    private val userDB = context.collection("users")
+    private val userDB = FirebaseFirestore
+        .getInstance()
+        .collection("users")
 
     fun addToDb(user: User) {
         userDB.document(user.id).set(user).addOnCompleteListener()

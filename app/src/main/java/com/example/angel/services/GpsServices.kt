@@ -1,6 +1,8 @@
 package com.example.angel.services
 
-class GpsServices ()
+import android.content.Context
+
+class GpsServices(val context: Context)
 {
 
 }
