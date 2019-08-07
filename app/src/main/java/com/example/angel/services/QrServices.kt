@@ -15,33 +15,32 @@ class QrServices(val context: Context) {
 
     val auth=FirebaseAuth.getInstance()
     val userServices=UserServices(context)
-    val options = FirebaseVisionBarcodeDetectorOptions.Builder()
-        .setBarcodeFormats(
-            FirebaseVisionBarcode.FORMAT_QR_CODE
-        )
-        .build()
 
-    fun getQRCodeDetails(bitmap: Bitmap) {
-
-        val detector = FirebaseVision.getInstance().getVisionBarcodeDetector(options)
+    fun getQRCodeDetails(bitmap: Bitmap): MutableList<String> {
+        val results = mutableListOf<String>()
         val image = FirebaseVisionImage.fromBitmap(bitmap)
+        val options = FirebaseVisionBarcodeDetectorOptions.Builder()
+            .setBarcodeFormats(
+                FirebaseVisionBarcode.FORMAT_QR_CODE
+            )
+            .build()
+        val detector = FirebaseVision.getInstance().getVisionBarcodeDetector(options)
 
-        ///TODO: Refactor code
-        ///TODO: Add a popup to confirm becoming an angel
-        detector.detectInImage(image)
+        val ok = detector.detectInImage(image)
             .addOnSuccessListener {
                 for (firebaseBarcode in it) {
-                    if (firebaseBarcode.rawValue != null) {
-                        if(userServices.isValidId(firebaseBarcode.rawValue.toString())) {
-                            userServices.becomeAngel(auth.currentUser!!.uid,firebaseBarcode.rawValue.toString())
-                            Log.d("[QRServices]", firebaseBarcode.rawValue.toString())
+                    if (firebaseBarcode.displayValue != null) {
+                        if (userServices.isValidId(firebaseBarcode.displayValue!!)) {
+                            results.add(firebaseBarcode.displayValue!!)
+                            Toast.makeText(context, firebaseBarcode.displayValue, Toast.LENGTH_SHORT).show()
+                            Log.d("[QRServices]", firebaseBarcode.displayValue!!)
                         }
                     }
                 }
             }
-            .addOnFailureListener {
-                it.printStackTrace()
-                }
+        while (!ok.isComplete)
+            continue
+        return results
     }
 
 

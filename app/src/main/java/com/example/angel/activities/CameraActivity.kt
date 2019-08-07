@@ -1,21 +1,28 @@
 package com.example.angel.activities
 
+import android.content.Context
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.widget.LinearLayout
+import android.widget.PopupWindow
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.angel.R
 import com.example.angel.services.CameraServices
 import com.example.angel.services.QrServices
+import com.example.angel.services.UserServices
+import com.google.firebase.auth.FirebaseAuth
 import io.fotoapparat.Fotoapparat
 import io.fotoapparat.configuration.CameraConfiguration
 import io.fotoapparat.parameter.ScaleType
 import io.fotoapparat.selector.*
 import kotlinx.android.synthetic.main.activity_camera.*
 
-
 class CameraActivity : AppCompatActivity() {
 
     lateinit var fotoAparat: Fotoapparat
+    val currentUser = FirebaseAuth.getInstance().currentUser
+    var userServices = UserServices(this)
     var qrServices = QrServices(this)
     var cameraServices = CameraServices(this)
 
@@ -41,8 +48,7 @@ class CameraActivity : AppCompatActivity() {
             none()
         ),
         jpegQuality = manualJpegQuality(90),     // (optional) select a jpeg quality of 90 (out of 0-100) values
-        sensorSensitivity = lowestSensorSensitivity(), // (optional) we want to have the lowest sensor sensitivity (ISO)
-        frameProcessor = { frame -> }            // (optional) receives each frame from preview stream
+        sensorSensitivity = lowestSensorSensitivity() // (optional) we want to have the lowest sensor sensitivity (ISO)
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,7 +70,14 @@ class CameraActivity : AppCompatActivity() {
             fotoAparat.takePicture().toBitmap().whenAvailable {
                 if (it != null) {
                     Toast.makeText(this, "scanning", Toast.LENGTH_SHORT).show()
-                    qrServices.getQRCodeDetails(it.bitmap)
+                    val codes = qrServices.getQRCodeDetails(it.bitmap)
+                    if (codes.isEmpty()) {
+                        Toast.makeText(this, "you can enter the user code by hand", Toast.LENGTH_SHORT).show()
+                    } else {
+                        for (code in codes) {
+                            userServices.becomeAngel(currentUser!!.uid, code)
+                        }
+                    }
                 }
             }
         }

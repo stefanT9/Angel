@@ -3,14 +3,19 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="com.example.angel">
 
+    <!--
+         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but you must specify either coarse or fine
+         location permissions for the 'MyLocation' functionality.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <uses-feature android:name="android.hardware.camera.autofocus"/>
-    <uses-feature
-            android:name="android.hardware.camera"
-            android:required="true"/>
+    <uses-feature android:name="android.hardware.camera" android:required="true"/>
 
     <application
             android:allowBackup="true"
@@ -20,33 +25,28 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme"
             tools:ignore="GoogleAppIndexingWarning">
+
+
         <meta-data
                 android:name="com.google.firebase.ml.vision.DEPENDENCIES"
                 android:value="barcode"/>
-        <activity
-                android:name=".activities.QrActivity">
-        </activity>
 
+        <activity android:name=".activities.QrActivity">
+        </activity>
         <activity android:name=".activities.CameraActivity">
-
         </activity>
-
-        <activity
-                android:name=".activities.RegisterActivity">
+        <activity android:name=".activities.RegisterActivity">
         </activity>
-
-        <activity
-                android:name=".activities.MainActivity">
+        <activity android:name=".activities.MainActivity">
         </activity>
-
-        <activity
-                android:name=".activities.LoginActivity">
+        <activity android:name=".activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <service></service>
     </application>
 
 </manifest>
