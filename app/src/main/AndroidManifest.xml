@@ -32,10 +32,11 @@
                 android:name="com.google.firebase.ml.vision.DEPENDENCIES"
                 android:value="barcode"/>
 
-        <activity android:name=".activities.QrActivity"/>
-        <activity android:name=".activities.CameraActivity"/>
         <activity android:name=".activities.RegisterActivity"/>
-        <activity android:name=".activities.MainActivity"/>
+        <activity android:name=".activities.MainActivity">
+
+        </activity>
+
 
         <activity android:name=".activities.LoginActivity">
             <intent-filter>

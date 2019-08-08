@@ -1,12 +1,12 @@
 package com.example.angel.activities
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.widget.LinearLayout
-import android.widget.PopupWindow
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.annotation.Nullable
+import androidx.fragment.app.Fragment
 import com.example.angel.R
 import com.example.angel.services.CameraServices
 import com.example.angel.services.QrServices
@@ -16,15 +16,15 @@ import io.fotoapparat.Fotoapparat
 import io.fotoapparat.configuration.CameraConfiguration
 import io.fotoapparat.parameter.ScaleType
 import io.fotoapparat.selector.*
-import kotlinx.android.synthetic.main.activity_camera.*
+import kotlinx.android.synthetic.main.fragment_camera.*
 
-class CameraActivity : AppCompatActivity() {
+class CameraFragment() : Fragment() {
 
     lateinit var fotoAparat: Fotoapparat
     val currentUser = FirebaseAuth.getInstance().currentUser
-    var userServices = UserServices(this)
-    var qrServices = QrServices(this)
-    var cameraServices = CameraServices(this)
+    var userServices = UserServices()
+    var qrServices = QrServices()
+    var cameraServices = CameraServices()
 
     val cameraConfiguration = CameraConfiguration(
         pictureResolution = highestResolution(), // (optional) we want to have the highest possible photo resolution
@@ -51,12 +51,15 @@ class CameraActivity : AppCompatActivity() {
         sensorSensitivity = lowestSensorSensitivity() // (optional) we want to have the lowest sensor sensitivity (ISO)
     )
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_camera)
 
+        return inflater.inflate(R.layout.fragment_camera, container, false)
+    }
+
+    override fun onViewCreated(view: View, @Nullable savedInstanceState: Bundle?) {
         fotoAparat = Fotoapparat(
-            context = this,
+            context = context!!,
             view = camera_cameraView_camera,                   // view which will draw the camera preview
             scaleType = ScaleType.CenterCrop,    // (optional) we want the preview to fill the view
             cameraConfiguration = cameraConfiguration, // (optional) define an advanced configuration
@@ -69,10 +72,8 @@ class CameraActivity : AppCompatActivity() {
         {
             fotoAparat.takePicture().toBitmap().whenAvailable {
                 if (it != null) {
-                    Toast.makeText(this, "scanning", Toast.LENGTH_SHORT).show()
                     val codes = qrServices.getQRCodeDetails(it.bitmap)
                     if (codes.isEmpty()) {
-                        Toast.makeText(this, "you can enter the user code by hand", Toast.LENGTH_SHORT).show()
                     } else {
                         for (code in codes) {
                             userServices.becomeAngel(currentUser!!.uid, code)
@@ -81,11 +82,6 @@ class CameraActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        fotoAparat.stop()
     }
 
 }

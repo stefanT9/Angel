@@ -18,7 +18,7 @@ class RegisterActivity : AppCompatActivity() {
 
     val auth = FirebaseAuth.getInstance()
     val db = FirebaseFirestore.getInstance()
-    val userServices = UserServices(this)
+    val userServices = UserServices()
 
     lateinit var email: String
     lateinit var name: String

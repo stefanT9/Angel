@@ -10,6 +10,6 @@ import android.widget.Toast
 import java.io.ByteArrayOutputStream
 
 
-class CameraServices(val context: Context) {
+class CameraServices() {
 
 }

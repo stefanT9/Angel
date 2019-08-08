@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 class LoginActivity : AppCompatActivity() {
 
     var auth = FirebaseAuth.getInstance()
-    var emergencyService = EmergencyServices(this)
+    var emergencyService = EmergencyServices()
     var db = FirebaseFirestore.getInstance()
 
     lateinit var email: String

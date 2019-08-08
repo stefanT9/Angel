@@ -7,28 +7,9 @@
         android:layout_height="match_parent"
         tools:context=".activities.MainActivity">
 
-    <TextView
-            android:id="@+id/username_textView_main"
+    <androidx.viewpager.widget.ViewPager
+            android:id="@+id/slideLayout_main"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text=""
-    />
-
-    <Button
-            android:id="@+id/getAngel_button_main"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:text="i need a hero"
-    />
-
-    <Button
-            android:id="@+id/becomeAngel_button_main"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/getAngel_button_main"
-            android:text="become a hero"
-    />
-
+            android:layout_height="match_parent">
+    </androidx.viewpager.widget.ViewPager>
 </androidx.constraintlayout.widget.ConstraintLayout>

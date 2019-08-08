@@ -11,10 +11,10 @@ import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcode
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetectorOptions
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 
-class QrServices(val context: Context) {
+class QrServices() {
 
     val auth=FirebaseAuth.getInstance()
-    val userServices=UserServices(context)
+    val userServices = UserServices()
 
     fun getQRCodeDetails(bitmap: Bitmap): MutableList<String> {
         val results = mutableListOf<String>()
@@ -32,7 +32,6 @@ class QrServices(val context: Context) {
                     if (firebaseBarcode.displayValue != null) {
                         if (userServices.isValidId(firebaseBarcode.displayValue!!)) {
                             results.add(firebaseBarcode.displayValue!!)
-                            Toast.makeText(context, firebaseBarcode.displayValue, Toast.LENGTH_SHORT).show()
                             Log.d("[QRServices]", firebaseBarcode.displayValue!!)
                         }
                     }

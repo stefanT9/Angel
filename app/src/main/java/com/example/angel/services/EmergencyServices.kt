@@ -6,7 +6,7 @@ import android.content.Intent
 import android.net.Uri
 
 
-class EmergencyServices(val context: Context) {
+class EmergencyServices() {
 
     fun callEmergency() {
 
