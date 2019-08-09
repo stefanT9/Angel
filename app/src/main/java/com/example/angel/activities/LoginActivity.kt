@@ -18,7 +18,6 @@ class LoginActivity : AppCompatActivity() {
 
     var auth = FirebaseAuth.getInstance()
     var emergencyService = EmergencyServices()
-    var db = FirebaseFirestore.getInstance()
 
     lateinit var email: String
     lateinit var password: String
@@ -35,7 +34,10 @@ class LoginActivity : AppCompatActivity() {
         password = password_editText_login.text.toString()
 
         if (auth.currentUser != null) {
-            auth.signOut()
+            intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+            ///auth.signOut()
         }
 
         login_button_login.setOnClickListener()

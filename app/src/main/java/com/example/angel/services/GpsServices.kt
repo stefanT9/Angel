@@ -5,6 +5,7 @@ import android.app.job.JobService
 import android.content.Context
 import android.location.Location
 import android.util.Log
+import com.example.angel.models.User
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
@@ -45,11 +46,23 @@ class GpsServices : JobService() {
             )
             if (location != null) {
                 coordinates = GeoPoint(location.latitude, location.longitude)
-                db.collection("users").document(currentUser?.uid.toString())
-                    .update("lastPosition", coordinates).addOnCompleteListener()
-                    {
-                        jobFinished(params, false)
-                }
+                var locations = mutableListOf<GeoPoint?>()
+                db.collection("users")
+                    .document(currentUser?.uid.toString())
+                    .get().addOnSuccessListener {
+                        val user = User(it)
+                        user.locations.add(coordinates!!)
+
+                        db.collection("users")
+                            .document(currentUser?.uid.toString())
+                            .set(user)
+                            .addOnCompleteListener()
+                            {
+                                jobFinished(params, false)
+                            }
+
+                    }
+
             }
         }
     }

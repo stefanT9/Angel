@@ -7,7 +7,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.lang.Exception
 import kotlin.system.measureTimeMillis
 
-class UserServices() {
+class UserServices {
 
     private val userDB = FirebaseFirestore
         .getInstance()
@@ -44,7 +44,7 @@ class UserServices() {
         userDB.document(user["id"].toString()).set(user)
     }
 
-    private fun user2hash(user: User): HashMap<String, Any> {
+    fun user2hash(user: User): HashMap<String, Any> {
         val hashMap = HashMap<String, Any>()
         hashMap["id"] = user.id
         hashMap["angelsId"] = user.angelsId
@@ -56,12 +56,13 @@ class UserServices() {
         return hashMap
     }
 
-    private fun hash2user(hashMap: HashMap<String, Any>): User {
+    fun hash2user(hashMap: HashMap<String, Any>): User {
         return User(hashMap)
     }
 
-    private fun getUserById(userId: String): User {
-        lateinit var user: User
+    fun getUserById(userId: String): User {
+        var user = User()
+
         val status = userDB.document(userId).get().addOnSuccessListener {
             user = User(it)
         }
