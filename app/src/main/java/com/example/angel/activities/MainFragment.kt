@@ -1,18 +1,15 @@
 package com.example.angel.activities
 
-import android.content.Context
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.BaseAdapter
 import androidx.fragment.app.Fragment
 import com.example.angel.R
 import com.example.angel.models.User
-import com.example.angel.services.UserServices
 import com.example.angel.views.CustomAdapter
 import com.example.angel.views.UserView
 import com.google.firebase.auth.FirebaseAuth
@@ -23,21 +20,16 @@ import kotlinx.android.synthetic.main.fragment_main.*
 
 class MainFragment : Fragment() {
 
-    val auth = FirebaseAuth.getInstance()
-    val db = FirebaseFirestore.getInstance()
-    val userServices = UserServices()
+    private val auth = FirebaseAuth.getInstance()
+    private val db = FirebaseFirestore.getInstance()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreate(savedInstanceState)
 
-        val view = inflater.inflate(R.layout.fragment_main, container, false)
-        return view
+        return inflater.inflate(R.layout.fragment_main, container, false)
     }
 
-    fun newInstance(): MainFragment {
-        return MainFragment()
-    }
-
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -56,8 +48,8 @@ class MainFragment : Fragment() {
         guarded_listView_mainFragment.adapter = adapter
 
         db.collection("users").document(auth.currentUser!!.uid).get().addOnSuccessListener()
-        {
-            val user = User(it)
+        { res ->
+            val user = User(res)
             for ((idx, id) in user.guardedId.withIndex()) {
                 Log.e("[MainFragment]", id)
                 friendsRef.add(db.collection("users").document(id))
@@ -73,10 +65,7 @@ class MainFragment : Fragment() {
         }
 
     }
+    ///TODO Create a listener for updating mainFragment
 
-    private fun startUpdateListener() {
-        return
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 }
 

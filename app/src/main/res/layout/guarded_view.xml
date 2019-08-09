@@ -14,7 +14,7 @@
             android:layout_height="50dp"/>
     <TextView
             android:layout_margin="6dp"
-            android:hint="Ana Mere"
+            android:hint="@string/lorem_ipsum"
             android:id="@+id/fullName_textView_guardedView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

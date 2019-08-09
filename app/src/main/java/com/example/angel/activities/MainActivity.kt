@@ -15,22 +15,18 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.example.angel.R
 import com.example.angel.services.GpsServices
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    val auth = FirebaseAuth.getInstance()
-    val db = FirebaseFirestore.getInstance()
     private val JOB_ID = 123
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        var viewPager = slideLayout_main
-        var pagerAdapter = MyPageAdapter(supportFragmentManager)
+        val viewPager = slideLayout_main
+        val pagerAdapter = MyPageAdapter(supportFragmentManager)
         viewPager.adapter = pagerAdapter
         viewPager.currentItem = 1
 
@@ -85,7 +81,7 @@ class MainActivity : AppCompatActivity() {
 }
 
 
-class MyPageAdapter : FragmentPagerAdapter {
+class MyPageAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
     override fun getCount(): Int {
         return 3
     }
@@ -102,7 +98,5 @@ class MyPageAdapter : FragmentPagerAdapter {
             }
         }
     }
-
-    constructor(fm: FragmentManager) : super(fm)
 
 }

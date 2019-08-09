@@ -1,30 +1,28 @@
 package com.example.angel.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.example.angel.R
 import com.example.angel.models.User
 import com.example.angel.services.UserServices
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity : AppCompatActivity() {
 
 
-    val auth = FirebaseAuth.getInstance()
-    val db = FirebaseFirestore.getInstance()
-    val userServices = UserServices()
+    private val auth = FirebaseAuth.getInstance()
+    private val userServices = UserServices()
 
-    lateinit var email: String
-    lateinit var name: String
-    lateinit var surename: String
-    lateinit var password: String
-    lateinit var cnp: String
+    private lateinit var email: String
+    private lateinit var name: String
+    private lateinit var surename: String
+    private lateinit var password: String
+    private lateinit var cnp: String
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,7 +73,7 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
-    fun updateCredentials() {
+    private fun updateCredentials() {
         email = email_editText_register.text.toString()
         name = name_editText_register.text.toString()
         surename = surename_editText_register.text.toString()
@@ -83,7 +81,7 @@ class RegisterActivity : AppCompatActivity() {
         cnp = cnp_editText_register.text.toString()
     }
 
-    fun validCredentials(): Boolean {
+    private fun validCredentials(): Boolean {
         if (!validCnp()) {
             return false
         }
@@ -102,6 +100,7 @@ class RegisterActivity : AppCompatActivity() {
         return true
     }
 
+    ///TODO Make Validator service
     private fun validCnp(): Boolean {
         return true
     }

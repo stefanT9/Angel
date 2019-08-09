@@ -1,11 +1,8 @@
 package com.example.angel.services
 
-import android.content.Context
 import android.util.Log
 import com.example.angel.models.User
 import com.google.firebase.firestore.FirebaseFirestore
-import java.lang.Exception
-import kotlin.system.measureTimeMillis
 
 class UserServices {
 
@@ -87,7 +84,7 @@ class UserServices {
     }
 
     fun isValidId(id: String): Boolean {
-
+        ///TODO complete function
         return true
     }
 

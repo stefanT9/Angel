@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.annotation.Nullable
 import androidx.fragment.app.Fragment
 import com.example.angel.R
-import com.example.angel.services.CameraServices
 import com.example.angel.services.QrServices
 import com.example.angel.services.UserServices
 import com.google.firebase.auth.FirebaseAuth
@@ -18,15 +16,14 @@ import io.fotoapparat.parameter.ScaleType
 import io.fotoapparat.selector.*
 import kotlinx.android.synthetic.main.fragment_camera.*
 
-class CameraFragment() : Fragment() {
+class CameraFragment : Fragment() {
 
-    lateinit var fotoAparat: Fotoapparat
-    val currentUser = FirebaseAuth.getInstance().currentUser
-    var userServices = UserServices()
-    var qrServices = QrServices()
-    var cameraServices = CameraServices()
+    private lateinit var fotoApparat: Fotoapparat
+    private val currentUser = FirebaseAuth.getInstance().currentUser
+    private var userServices = UserServices()
+    private var qrServices = QrServices()
 
-    val cameraConfiguration = CameraConfiguration(
+    private val cameraConfiguration = CameraConfiguration(
         pictureResolution = highestResolution(), // (optional) we want to have the highest possible photo resolution
         previewResolution = highestResolution(), // (optional) we want to have the highest possible preview resolution
         previewFpsRange = highestFps(),          // (optional) we want to have the best frame rate
@@ -58,7 +55,7 @@ class CameraFragment() : Fragment() {
     }
 
     override fun onViewCreated(view: View, @Nullable savedInstanceState: Bundle?) {
-        fotoAparat = Fotoapparat(
+        fotoApparat = Fotoapparat(
             context = context!!,
             view = camera_cameraView_camera,                   // view which will draw the camera preview
             scaleType = ScaleType.CenterCrop,    // (optional) we want the preview to fill the view
@@ -66,11 +63,11 @@ class CameraFragment() : Fragment() {
             lensPosition = back()           // (optional) we want back camera
 
         )
-        fotoAparat.start()
+        fotoApparat.start()
 
         scanQr_button_camera.setOnClickListener()
         {
-            fotoAparat.takePicture().toBitmap().whenAvailable {
+            fotoApparat.takePicture().toBitmap().whenAvailable {
                 if (it != null) {
                     val codes = qrServices.getQRCodeDetails(it.bitmap)
                     if (codes.isEmpty()) {

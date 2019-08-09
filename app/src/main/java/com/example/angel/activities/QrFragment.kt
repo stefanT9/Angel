@@ -20,7 +20,7 @@ import androidx.annotation.Nullable
 
 class QrFragment : Fragment() {
 
-    val auth=FirebaseAuth.getInstance()
+    private val auth = FirebaseAuth.getInstance()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreate(savedInstanceState)
 
@@ -48,7 +48,7 @@ class QrFragment : Fragment() {
 
     override fun onViewCreated(view: View, @Nullable savedInstanceState: Bundle?) {
 
-        val img = view.findViewById(R.id.qrCode_imageView_qr) as ImageView
+        view.findViewById(R.id.qrCode_imageView_qr) as ImageView
         setQr(qrCode_imageView_qr, auth.currentUser?.uid)
     }
 
