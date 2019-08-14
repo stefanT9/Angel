@@ -73,11 +73,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun stopLocationUpdate() {
-        val scheduler = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
-        scheduler.cancel(JOB_ID)
-        Log.e("[Main]", "Task Canceled")
-    }
+
 }
 
 

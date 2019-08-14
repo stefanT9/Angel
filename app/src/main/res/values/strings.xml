@@ -5,4 +5,14 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="lorem_ipsum">Lorem Ipsum</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="sign_up">Sign up</string>
+    <string name="email">email</string>
+    <string name="password">password</string>
+    <string name="login">Login</string>
+    <string name="angel">ANGEL</string>
+    <string name="register">Register</string>
+    <string name="name">name</string>
+    <string name="surename">surename</string>
+    <string name="textOnScan">Scan the qr code of someone so you can find them if something happens</string>
 </resources>

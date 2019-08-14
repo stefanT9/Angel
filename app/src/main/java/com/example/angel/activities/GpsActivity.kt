@@ -2,21 +2,20 @@ package com.example.angel.activities
 
 
 import android.os.Bundle
-import android.transition.Scene
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.angel.BuildConfig
+import com.example.angel.R
 import com.example.angel.models.User
 import com.google.firebase.firestore.FirebaseFirestore
 import com.microsoft.maps.*
 import kotlinx.android.synthetic.main.activity_gps.*
-import com.example.angel.R
 
 class GpsActivity : AppCompatActivity() {
 
-    val db = FirebaseFirestore.getInstance()
-    lateinit var mapView: MapView
-    lateinit var locations: Geolocation
+    private val db = FirebaseFirestore.getInstance()
+    private lateinit var mapView: MapView
+    private lateinit var locations: Geolocation
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,7 +24,8 @@ class GpsActivity : AppCompatActivity() {
 
         try {
             db.collection("users").document(userId!!).get().addOnSuccessListener {
-                val lastLocations = User(it).locations
+                val user = User(it)
+                val lastLocations = user.locations
                 val geolocation = Geolocation(lastLocations.last().latitude, lastLocations.last().longitude)
 
                 locations = geolocation
@@ -39,13 +39,23 @@ class GpsActivity : AppCompatActivity() {
                 )
                 mapLayout_Gps.addView(mapView)
                 val pinLayer = MapElementLayer()
-                mapView.layers.add(pinLayer)
+                mapView.layers.add(pinLayer as MapLayer?)
 
-                val locationPin = MapIcon()
-                locationPin.location = geolocation
-                locationPin.title = "Last Location"
-                pinLayer.elements.add(locationPin)
+                var len = 1
+                for ((idx, location) in user.locations.withIndex()) {
+                    if (idx == user.locations.size - 1 || location != user.locations[idx + 1]) {
+                        val locationPin = MapIcon()
+                        locationPin.location = Geolocation(location.latitude, location.longitude)
+                        locationPin.title = "$idx : $len"
+                        pinLayer.elements.add(locationPin)
 
+                        Log.e("[Gps]", "pin placed with name $idx :$len")
+                        len = 1
+                    } else {
+                        len++
+                        Log.e("[Gps]", "$idx $len")
+                    }
+                }
                 onResume()
             }
         } catch (e: NullPointerException) {

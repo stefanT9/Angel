@@ -1,5 +1,7 @@
 package com.example.angel.activities
 
+import android.app.job.JobScheduler
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +17,7 @@ class LoginActivity : AppCompatActivity() {
 
     private var auth = FirebaseAuth.getInstance()
     private var emergencyService = EmergencyServices()
+    private var JOB_ID = 123
 
     private lateinit var email: String
     private lateinit var password: String
@@ -24,17 +27,19 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
 
+        stopLocationUpdate()
+
+        setContentView(R.layout.activity_login)
 
         email = email_editText_login.text.toString()
         password = password_editText_login.text.toString()
 
         if (auth.currentUser != null) {
-            intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-            finish()
-            ///auth.signOut()
+            //intent = Intent(this, MainActivity::class.java)
+            //startActivity(intent)
+            //finish()
+            auth.signOut()
         }
 
         login_button_login.setOnClickListener()
@@ -82,5 +87,11 @@ class LoginActivity : AppCompatActivity() {
     private fun updateCredentials() {
         email = email_editText_login.text.toString()
         password = password_editText_login.text.toString()
+    }
+
+    private fun stopLocationUpdate() {
+        val scheduler = getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
+        scheduler.cancel(JOB_ID)
+        Log.e("[Main]", "Task Canceled")
     }
 }
